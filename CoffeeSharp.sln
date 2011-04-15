@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeSharp", "CoffeeSharp\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Coffee", "Coffee\Coffee.fsproj", "{D294906B-DE5D-43CB-B88F-8799F2096730}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeScriptHttpHandler", "CoffeeScriptHttpHandler\CoffeeScriptHttpHandler.csproj", "{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{D294906B-DE5D-43CB-B88F-8799F2096730}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D294906B-DE5D-43CB-B88F-8799F2096730}.Release|x86.ActiveCfg = Release|x86
 		{D294906B-DE5D-43CB-B88F-8799F2096730}.Release|x86.Build.0 = Release|x86
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0D219FEA-7A7D-4CAD-B284-A5AB350E0552}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
