@@ -1,0 +1,9 @@
+# Vim swap file
+*.swp
+
+# Visual studio files
+[Oo]bj
+[Bb]in
+*.user
+*.suo
+
