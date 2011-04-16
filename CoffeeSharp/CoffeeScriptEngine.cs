@@ -22,14 +22,18 @@ namespace CoffeeSharp
       scriptEngine.Execute("coffeeScriptCompile = CoffeeScript.compile;");
     }
 
-    public void Eval(string code, bool globals = false)
+    public string Eval(string code, bool bare = false, bool globals = false, string filename = "repl")
     {
       var options = new JsObject(scriptEngine);
-      options["globals"] = globals;
+      options["bare"]     = bare;
+      options["globals"]  = globals;
+      options["filename"] = filename;
 
       scriptEngine.SetGlobalValue("console", new Jurassic.Library.FirebugConsole(scriptEngine));
-      scriptEngine.CallGlobalFunction("coffeeScriptEval", code, options);
+      var o = scriptEngine.CallGlobalFunction("coffeeScriptEval", code, options);
       scriptEngine.Evaluate("delete console");
+
+      return o == null || o is Undefined ? null : o.ToString();
     }
 
     public string Nodes(string source)
