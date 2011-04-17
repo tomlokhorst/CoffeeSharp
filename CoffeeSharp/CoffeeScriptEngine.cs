@@ -52,10 +52,11 @@ namespace CoffeeSharp
         yield return Tuple.Create((string)v[0], v[1]);
     }
 
-    public string Compile(string code, bool bare = false)
+    public string Compile(string code, bool bare = false, bool globals = false)
     {
       var options = new JsObject(scriptEngine);
       options["bare"] = bare;
+      options["globals"] = globals;
 
       return scriptEngine.CallGlobalFunction<string>("coffeeScriptCompile", code, options);
     }

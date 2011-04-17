@@ -21,17 +21,24 @@ namespace CoffeeSharp
     {
       var path = context.Request.PhysicalPath;
 
-      var bare = false;
-
-      var s = context.Request.QueryString["bare"];
-      if (s != null)
-        bool.TryParse(s, out bare);
+      var bare = getBool(context, "bare");
+      var globals = getBool(context, "globals");
 
       var code = File.ReadAllText(path);
-      var js = this.coffeeScriptEngine.Compile(code, bare);
+      var js = this.coffeeScriptEngine.Compile(code, bare, globals);
 
       context.Response.ContentType = "text/javascript";
       context.Response.Write(js);
+    }
+
+    private bool getBool(HttpContext context, string name)
+    {
+      var b = false;
+      var s = context.Request.QueryString[name];
+      if (s != null)
+        bool.TryParse(s, out b);
+
+      return b;
     }
 
     public bool IsReusable
