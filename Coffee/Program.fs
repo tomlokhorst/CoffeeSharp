@@ -1,10 +1,13 @@
-﻿[<assembly: System.Reflection.AssemblyVersion("1.0.1.0")>]
+﻿[<assembly: System.Reflection.AssemblyVersion("1.0.1.1")>]
 do ()
 
 open CoffeeSharp
 open OptionParser
 
 let cse = new CoffeeScriptEngine()
+
+let showVersion () =
+  printfn "CoffeeScript version %s" "1.0.1"
 
 let showHelp () =
   printfn "Usage: Coffee.exe [options] path\\to\\script.coffee"
@@ -55,7 +58,7 @@ let main args =
     then (new StreamReader (System.Console.OpenStandardInput ())).ReadToEnd ()
     else File.ReadAllText config.filename.Value
   match config.action with
-    | Version     -> printfn "CoffeeScript version %s" "1.0.1"
+    | Version     -> showVersion ()
     | Help        -> showHelp ()
     | Interactive -> repl ()
     | Eval        -> Option.iter (fun code -> eval code false false |> ignore) config.code
