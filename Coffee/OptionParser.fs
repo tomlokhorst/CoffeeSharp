@@ -1,43 +1,41 @@
 ﻿module OptionParser
 
 type Action =
-  | Compile
+  | Compile      of string list
   | Interactive
-  | Eval
-  | Tokens
-  | Nodes
+  | Eval         of string option
+  | Tokens       of string option
+  | Nodes        of string option
   | Version
   | Help
 
 type Config =
   { action      : Action;
-  //  outputDir   : string option;
-  //  joinFiles   : bool;
-  //  watchDir    : bool;
+    outputDir   : string option;
+    joinFiles   : bool;
+  //  watchDir    : string option;
     print       : bool;
     stdio       : bool;
     bare        : bool;
-    filename    : string option;
-    code        : string option;
+    arguments   : string list;
   }
 
 let defaultConfig =
-  { action    = Eval;
-  //  outputDir = None;
-  //  joinFiles = false;
-  //  watchDir  = false;
+  { action    = Interactive;
+    outputDir = None;
+    joinFiles = false;
+  //  watchDir  = None;
     print     = false;
     stdio     = false;
     bare      = false;
-    filename  = None;
-    code      = None;
+    arguments = [];
   }
 
 let options =
   [ (Some 'c', "compile"     , "compile to JavaScript and save as .js files");
     (Some 'i', "interactive" , "run an interactive CoffeeScript REPL");
-  //  (Some 'o', "output"      , "set the directory for compiled JavaScript");
-  //  (Some 'j', "join"        , "concatenate the scripts before compiling");
+    (Some 'o', "output"      , "set the directory for compiled JavaScript");
+    (Some 'j', "join"        , "concatenate the scripts before compiling");
   //  (Some 'w', "watch"       , "watch scripts for changes, and recompile");
     (Some 'p', "print"       , "print the compiled JavaScript to stdout");
   //  (Some 'l', "lint"        , "pipe the compiled JavaScript through JSLint");
@@ -64,36 +62,45 @@ let (|Prefix|_|) (p:string) (s:string) =
   then Some(s.Substring(p.Length))
   else None
 
-let expand s =
+type Option =
+  | Short of char
+  | Long  of string
+
+let rec parseOptions args =
+  match args with
+    | []                  -> ([], [], [])
+    | "--" :: rest        -> ([], [], rest)
+    | Prefix "--" s::rest -> let (xs, ys, zs) = parseOptions rest
+                             (Long s :: xs, ys, zs)
+    | Prefix "-" s::rest  -> let (xs, ys, zs) = parseOptions rest
+                             (List.append (List.map Short (Seq.toList s)) xs, ys, zs)
+    | s :: rest           -> let (xs, ys, zs) = parseOptions rest
+                             (xs, s :: ys, zs)
+
+let toLong (opts, args, rest) =
   let f c = List.collect (fun (x, y, _) -> if x = Some c then [y] else []) options
-  match s with
-    | Prefix "--" rest -> [ rest ]
-    | Prefix "-" rest  -> List.collect f (Seq.toList rest)
-    | s                -> [ s ]
+  let g o = match o with Short c -> f c | Long s -> [s]
+  (List.collect g opts, args, rest)
 
-let parse' cfg arg =
-  match arg with
-    | "compile"     -> { cfg with action = Compile }
-    | "interactive" -> { cfg with action = Interactive }
-    | "print"       -> { cfg with print  = true }
-    | "stdio"       -> { cfg with stdio  = true }
-    | "eval"        -> { cfg with action = Eval }
-    | "bare"        -> { cfg with bare   = true }
-    | "tokens"      -> { cfg with action = Tokens }
-    | "nodes"       -> { cfg with action = Nodes }
-    | "version"     -> { cfg with action = Version }
-    | "help"        -> { cfg with action = Help }
-    | s             -> if cfg.action = Eval && cfg.code = None
-                       then { cfg with code     = Some s }
-                       else if cfg.filename = None
-                            then { cfg with filename = Some s }
-                            else cfg
-
-let parse args = List.fold parse' defaultConfig (List.collect expand args)
-
-let cleanup cfg =
-  if cfg.filename.IsSome || cfg.stdio
-  then cfg
-  else match cfg.action with
-        | Compile | Tokens  | Nodes -> { cfg with action = Interactive; }
-        | _ -> cfg
+let rec parse cfg args =
+  match args with
+    | ([]                   , args   , rest) -> {       cfg                    with arguments = rest }
+    | ("compile"     :: opts, args   , rest) -> { parse cfg (opts, []  , rest) with action    = Compile args }
+    | ("interactive" :: opts, args   , rest) -> { parse cfg (opts, args, rest) with action    = Interactive }
+    | ("output"      :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with outputDir = None }
+    | ("output"      :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with outputDir = Some a }
+  //  | ("watch"       :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with watchDir  = None }
+  //  | ("watch"       :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with watchDir  = Some a }
+    | ("join"        :: opts, args   , rest) -> { parse cfg (opts, args, rest) with joinFiles = true }
+    | ("print"       :: opts, args   , rest) -> { parse cfg (opts, args, rest) with print     = true }
+    | ("stdio"       :: opts, args   , rest) -> { parse cfg (opts, args, rest) with stdio     = true }
+    | ("eval"        :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with action    = Eval None }
+    | ("eval"        :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with action    = Eval (Some a) }
+    | ("bare"        :: opts, args   , rest) -> { parse cfg (opts, args, rest) with bare      = true }
+    | ("tokens"      :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with action    = Tokens None }
+    | ("tokens"      :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with action    = Tokens (Some a) }
+    | ("nodes"       :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with action    = Nodes None }
+    | ("nodes"       :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with action    = Nodes (Some a) }
+    | ("version"     :: opts, args   , rest) -> { parse cfg (opts, args, rest) with action    = Version }
+    | ("help"        :: opts, args   , rest) -> { parse cfg (opts, args, rest) with action    = Help }
+    | (_             :: opts, args   , rest) ->   parse cfg (opts, args, rest)

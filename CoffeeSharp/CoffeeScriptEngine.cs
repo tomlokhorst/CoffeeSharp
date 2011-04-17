@@ -22,12 +22,13 @@ namespace CoffeeSharp
       scriptEngine.Execute("coffeeScriptCompile = CoffeeScript.compile;");
     }
 
-    public string Eval(string code, bool bare = false, bool globals = false, string filename = "repl")
+    public string Eval(string code, bool bare = false, bool globals = false, string filename = null)
     {
       var options = new JsObject(scriptEngine);
       options["bare"]     = bare;
       options["globals"]  = globals;
-      options["filename"] = filename;
+      if (filename != null)
+        options["filename"] = filename;
 
       scriptEngine.SetGlobalValue("console", new Jurassic.Library.FirebugConsole(scriptEngine));
       var o = scriptEngine.CallGlobalFunction("coffeeScriptEval", code, options);
@@ -52,11 +53,13 @@ namespace CoffeeSharp
         yield return Tuple.Create((string)v[0], v[1]);
     }
 
-    public string Compile(string code, bool bare = false, bool globals = false)
+    public string Compile(string code, bool bare = false, bool globals = false, string filename = null)
     {
       var options = new JsObject(scriptEngine);
       options["bare"] = bare;
       options["globals"] = globals;
+      if (filename != null)
+        options["filename"] = filename;
 
       return scriptEngine.CallGlobalFunction<string>("coffeeScriptCompile", code, options);
     }
