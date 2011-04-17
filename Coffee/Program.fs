@@ -49,7 +49,7 @@ let compile code bare globals filename =
   let c = lazy (cse.Compile (code, bare, globals, toNull filename))
   printException c
 
-let compileScripts sources bare print outputDir =
+let compileScript dir fn bare print outputDir log =
   let c fn code = compile code bare false (Some fn)
   let filename dir fn =
     let fn'  = Path.Combine(Option.fold (fun _ s -> s) dir outputDir, fn)
@@ -61,10 +61,31 @@ let compileScripts sources bare print outputDir =
     if print
     then printfn "%s" s
     else File.WriteAllText(filename dir fn, s)
-  let f (dir, fns) =
-    List.map (fun fn -> Path.Combine(dir, fn) |> File.ReadAllText |> c fn |> Option.iter (output dir fn))
-             fns
-  List.map f sources |> ignore
+  Path.Combine(dir, fn)
+  |> File.ReadAllText
+  |> c fn
+  |> Option.iter (output dir fn)
+  if log
+  then printfn "%s - compiled %s" (System.DateTime.Now.ToLongTimeString()) fn
+  else ()
+
+let compileScripts sources bare print outputDir log =
+  List.map (fun (dir, fns) -> List.map (fun fn -> compileScript dir fn bare print outputDir log) fns) sources
+  |> ignore
+
+let watch (dir, fns) bare print outputDir =
+  let onChange (e: FileSystemEventArgs) =
+    if List.exists (fun i -> i = e.Name) fns
+    then compileScript dir e.Name bare print outputDir true
+    else ()
+  let fsw = (new FileSystemWatcher(dir))
+  fsw.IncludeSubdirectories <- true
+  fsw.Changed.Add onChange
+  fsw.EnableRaisingEvents <- true
+  let rec loop () =
+    System.Console.ReadLine () |> ignore
+    loop ()
+  loop ()
 
 let files (src : string) : string * string list =
   let rec files' root path =
@@ -112,7 +133,12 @@ let main args =
                       else Option.iter (fun c -> eval c false false None |> ignore) code
     | Compile srcs -> if config.stdio
                       then compile (stdin()) config.bare false None |> Option.iter (printfn "%s")
-                      else compileScripts (List.map files srcs) config.bare config.print config.outputDir
+                      else compileScripts (List.map files srcs) config.bare config.print config.outputDir config.watch
+                           if config.watch
+                           then List.map (fun src -> watch (files src) config.bare config.print config.outputDir) srcs
+                                |> ignore
+                           else ()
+
     | Tokens  osrc -> if config.stdio
                       then stdin() |> tokens
                       else Option.iter (sources tokens >> ignore) osrc

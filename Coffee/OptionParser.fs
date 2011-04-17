@@ -13,7 +13,7 @@ type Config =
   { action      : Action;
     outputDir   : string option;
     joinFiles   : bool;
-  //  watchDir    : string option;
+    watch       : bool;
     print       : bool;
     stdio       : bool;
     bare        : bool;
@@ -24,7 +24,7 @@ let defaultConfig =
   { action    = Interactive;
     outputDir = None;
     joinFiles = false;
-  //  watchDir  = None;
+    watch     = false;
     print     = false;
     stdio     = false;
     bare      = false;
@@ -36,7 +36,7 @@ let options =
     (Some 'i', "interactive" , "run an interactive CoffeeScript REPL");
     (Some 'o', "output"      , "set the directory for compiled JavaScript");
     (Some 'j', "join"        , "concatenate the scripts before compiling");
-  //  (Some 'w', "watch"       , "watch scripts for changes, and recompile");
+    (Some 'w', "watch"       , "watch scripts for changes, and recompile");
     (Some 'p', "print"       , "print the compiled JavaScript to stdout");
   //  (Some 'l', "lint"        , "pipe the compiled JavaScript through JSLint");
     (Some 's', "stdio"       , "listen for and compile scripts over stdio");
@@ -89,8 +89,7 @@ let rec parse cfg args =
     | ("interactive" :: opts, args   , rest) -> { parse cfg (opts, args, rest) with action    = Interactive }
     | ("output"      :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with outputDir = None }
     | ("output"      :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with outputDir = Some a }
-  //  | ("watch"       :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with watchDir  = None }
-  //  | ("watch"       :: opts, a::args, rest) -> { parse cfg (opts, args, rest) with watchDir  = Some a }
+    | ("watch"       :: opts, args   , rest) -> { parse cfg (opts, args, rest) with watch     = true }
     | ("join"        :: opts, args   , rest) -> { parse cfg (opts, args, rest) with joinFiles = true }
     | ("print"       :: opts, args   , rest) -> { parse cfg (opts, args, rest) with print     = true }
     | ("stdio"       :: opts, args   , rest) -> { parse cfg (opts, args, rest) with stdio     = true }
