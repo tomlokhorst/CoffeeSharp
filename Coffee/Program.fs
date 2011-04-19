@@ -1,4 +1,4 @@
-﻿[<assembly: System.Reflection.AssemblyVersion("1.0.1.1")>]
+﻿[<assembly: System.Reflection.AssemblyVersion("0.1.0.0")>]
 do ()
 
 let toNull (o : 'T option) =
@@ -23,7 +23,10 @@ open OptionParser
 
 let cse = new CoffeeScriptEngine()
 
+open System.Reflection
+
 let showVersion () =
+  printfn "CoffeeSharp  version %s" (Assembly.GetExecutingAssembly().GetName().Version.ToString())
   printfn "CoffeeScript version %s" "1.0.1"
 
 let showHelp () =
