@@ -135,7 +135,11 @@ let main args =
     | Interactive  -> repl()
     | Eval    code -> if config.stdio
                       then eval (stdin()) false false (Some "stdin") |> ignore
-                      else Option.iter (fun c -> eval c false false None |> ignore) code
+                      else if code = None && not config.arguments.IsEmpty
+                           then let filename = config.arguments.Head
+                                let code     = File.ReadAllText filename
+                                eval code false false (Some filename) |> ignore
+                           else repl()
     | Compile srcs -> if config.stdio
                       then compile (stdin()) config.bare false None |> Option.iter (printfn "%s")
                       else compileScripts (List.map files srcs) config.bare config.print config.outputDir config.watch

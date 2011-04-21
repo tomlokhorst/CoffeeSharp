@@ -21,7 +21,7 @@ type Config =
   }
 
 let defaultConfig =
-  { action    = Interactive;
+  { action    = Eval None;
     outputDir = None;
     joinFiles = false;
     watch     = false;
@@ -84,7 +84,7 @@ let toLong (opts, args, rest) =
 
 let rec parse cfg args =
   match args with
-    | ([]                   , args   , rest) -> {       cfg                    with arguments = rest }
+    | ([]                   , args   , rest) -> {       cfg                    with arguments = List.append args rest }
     | ("compile"     :: opts, args   , rest) -> { parse cfg (opts, []  , rest) with action    = Compile args }
     | ("interactive" :: opts, args   , rest) -> { parse cfg (opts, args, rest) with action    = Interactive }
     | ("output"      :: opts, []     , rest) -> { parse cfg (opts, []  , rest) with outputDir = None }
