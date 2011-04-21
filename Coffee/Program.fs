@@ -104,7 +104,9 @@ let files (src : string) : string * string list =
            (List.collect (fun (di : DirectoryInfo) -> files' root (dir di.Name)) ds)
 
   if File.Exists src
-  then (Path.GetDirectoryName src, [Path.GetFileName src])
+  then let dir  = Path.GetDirectoryName src
+       let dir' = if dir = "" then "." else dir
+       (dir', [Path.GetFileName src])
   else (src, files' src "")
 
 let tokens code =
