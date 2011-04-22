@@ -87,18 +87,28 @@ a.css3button
 -->
 
 <h1>CoffeeScript compilation for Windows</h1>
-
 <div class="description">
 <p>
 Call the <a href=http://coffeescript.org/>CoffeeScript</a> compiler from .NET, IIS, or the Windows commandline.
 </div>
 
-<p>
-Get the zip file with some dlls and the executable:
-<p>
-<a class=css3button href=https://github.com/downloads/tomlokhorst/CoffeeSharp/CoffeeSharp-0.1.zip>CoffeeSharp-0.1.zip</a>
 
-<h2>Contents</h2>
+<h2>Install via NuGet</h2>
+<p>
+CoffeeSharp is available through NuGet: <a href=http://www.nuget.org/List/Packages/CoffeeSharp>CoffeeSharp - 0.1</a>
+
+<p>
+From the Package Manager Console, just type:
+<p>
+<pre><code>PM> Install-Package CoffeeSharp</code></pre>
+
+<p>
+<img alt="Screenshot of NuGet gallery" src=img/nuget-screenshot.png width=659 height=346 style="border: 1px solid black">
+
+
+<h2>Download binaries</h2>
+<p>
+If you can't use NuGet, just download the binaries in a zip file.
 
 <p>
 The download <a href=https://github.com/downloads/tomlokhorst/CoffeeSharp/CoffeeSharp-0.1.zip>CoffeeSharp-0.1.zip</a> contains the following:
@@ -118,7 +128,6 @@ Configure as such:<br>
 
 
 <h2>Example</h2>
-
 <p>
 Here's an example of how to use the commandline tool:
 
@@ -137,3 +146,9 @@ PS&gt; cat .\bin\test.js
   console.log('two squared', square(2));
 }).call(this);
 </code></pre>
+
+
+<h2>Sources</h2>
+<p>
+The source code of CoffeeSharp is availabe on <a href=http://github.com/tomlokhorst/CoffeeSharp>github</a>, it is BSD3 licenced.
+
