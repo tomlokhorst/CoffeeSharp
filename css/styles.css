@@ -1,0 +1,101 @@
+body
+{
+  background-color: #f8f0d3;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  color: #333;
+  margin: 0;
+}
+
+div.main
+{
+  background: #fff;
+  padding: 10px 0;
+  margin: 20px auto;
+  width: 100%;
+}
+
+div.content
+{
+  margin: 0 auto;
+  width: 800px;  
+}
+
+iframe
+{
+  border: 1px solid #888;
+}
+
+div.left-col
+{
+  float: left;
+  margin: 0 20px 0 0;
+  width: 300px;
+}
+
+div.right-col
+{
+  float: left;
+  width: 480px;
+}
+
+div.clearfix:after
+{
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+footer p
+{
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 50px;
+}
+
+h1
+{
+  background: url(img/coffeesharp-logo.png) no-repeat;
+  font-size: 28px;
+  color: #070f2c;
+  margin-bottom: 3px;
+  padding-left: 96px;
+  padding-top: 15px;
+  height: 51px;
+}
+
+h2
+{
+  font-size: 1.5em;
+  color: #070f2c;
+  margin: 1.5em 0 .5em;
+}
+
+div.main h2
+{
+  margin-top: 0;
+}
+
+a
+{
+  color: #070f2c;
+}
+
+.description
+{
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  font-style: italic;
+}
+
+pre
+{
+  background: #333;
+  border: 1px solid #000;
+  color: #eee;
+  padding: 10px;
+}
+

@@ -3,88 +3,11 @@
 
 <title>CoffeeSharp - CoffeeScript compilation for Windows</title>
 
-<style type="text/css">
-body
-{
-  background-color: #f8f0d3;
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  color: #333;
-  margin: 0 auto;
-  width: 700px;
-}
-h1
-{
-  background: url(img/coffeesharp-logo.png) no-repeat;
-  font-size: 28px;
-  color: #070f2c;
-  margin-bottom: 3px;
-  padding-left: 96px;
-  padding-top: 15px;
-  height: 51px;
-}
-h2
-{
-  font-size: 1.5em;
-  color: #070f2c;
-  margin: 1.5em 0 .5em;
-}
-a
-{
-  color: #070f2c;
-}
-.description
-{
-  font-size: 1.2em;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  font-style: italic;
-}
-pre
-{
-  background: #333;
-  border: 1px solid #000;
-  color: #eee;
-  padding: 10px;
-}
-a.css3button
-{
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  color: #ffffff;
-  padding: 8px 12px;
-  background: -moz-linear-gradient(
-    top,
-    #ea8e24 0%,
-    #c66a00);
-  background: -webkit-gradient(
-    linear, left top, left bottom, 
-    from(#ea8e24),
-    to(#c66a00));
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  border: 1px solid #b85f00;
-  -moz-box-shadow:
-    0px 2px 4px rgba(000,000,000,0.6),
-    inset 0px 1px 0px rgba(255,255,255,0.7);
-  -webkit-box-shadow:
-    0px 2px 4px rgba(000,000,000,0.6),
-    inset 0px 1px 0px rgba(255,255,255,0.7);
-  text-shadow:
-    -1px -1px 0px rgba(000,000,000,0.2),
-    0px 0px 0px rgba(240,022,240,0);
-  text-decoration: none;
-}
-</style>
+<link rel=stylesheet href=css/styles.css>
 
 <a href="http://github.com/tomlokhorst/CoffeeSharp"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-<!--
-<div class="download">
-  <a href="http://github.com/tomlokhorst/CoffeeSharp/zipball/master"><img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-  <a href="http://github.com/tomlokhorst/CoffeeSharp/tarball/master"><img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-</div>
--->
+<div class=content>
 
 <h1>CoffeeScript compilation for Windows</h1>
 <div class="description">
@@ -92,22 +15,36 @@ a.css3button
 Call the <a href=http://coffeescript.org/>CoffeeScript</a> compiler from .NET, IIS, or the Windows commandline.
 </div>
 
+</div>
+
+<div class=main>
+<div class=content>
+
+<div class=left-col>
 
 <h2>Install via NuGet</h2>
 <p>
-CoffeeSharp is available through NuGet: <a href=http://www.nuget.org/List/Packages/CoffeeSharp>CoffeeSharp - 0.1</a>
+To install CoffeeSharp in a Visual Studio project, open the Package Manager Console and type:
+<p>
+<pre><code>PM&gt; Install-Package CoffeeSharp</code></pre>
 
 <p>
-From the Package Manager Console, just type:
-<p>
-<pre><code>PM> Install-Package CoffeeSharp</code></pre>
+Alternatively, you can use the Package Manager dialog, see the video for more details.
 
-<p>
-The video below shows how to install and use CoffeeSharp from NuGet:
+</div>
+<div class=right-col>
 
-<p>
-<iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/Ee7iDMlqIkw" frameborder="0" allowfullscreen></iframe>
+<!-- <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/Ee7iDMlqIkw" frameborder="0" allowfullscreen></iframe> -->
+<iframe title="YouTube video player" width="480" height="300" src="http://www.youtube.com/embed/Ee7iDMlqIkw" frameborder="0" allowfullscreen></iframe>
 
+</div>
+
+<div class=clearfix></div>
+
+</div>
+</div>
+
+<div class=content>
 
 <h2>Download binaries</h2>
 <p>
@@ -150,8 +87,20 @@ PS&gt; cat .\bin\test.js
 }).call(this);
 </code></pre>
 
+<p>
+<em>Tip:</em> Use the <code>--watch</code> flag, to keep the compiler running in 'watch-mode'.
+This way, it will continue monitoring the source files for any changes, and recompile immediately when they're modified.
+
 
 <h2>Sources</h2>
 <p>
-The source code of CoffeeSharp is availabe on <a href=http://github.com/tomlokhorst/CoffeeSharp>github</a>, it is BSD3 licenced.
+The source code of CoffeeSharp is available on <a href=http://github.com/tomlokhorst/CoffeeSharp>github</a>, it is BSD3 licenced.
+
+<hr>
+<footer>
+<p>
+<small>Copyright (C) 2011, Tom Lokhorst</small>
+</footer>
+
+</div>
 
