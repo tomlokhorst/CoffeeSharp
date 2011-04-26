@@ -1,23 +1,8 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
-
-<head>
-<title>CoffeeSharp - CoffeeScript compilation for Windows</title>
-
 <link rel=stylesheet href=css/styles.css>
 
-<script type="text/javascript">
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-9310524-3']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-</script>
-</head>
+<title>CoffeeSharp - CoffeeScript compilation for Windows</title>
 
 <a href="http://github.com/tomlokhorst/CoffeeSharp"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
@@ -81,7 +66,16 @@ Configure as such:<br>
 </ul>
 
 
-<h2>Example</h2>
+<h2>Example: CoffeeSharp.dll</h2>
+<p>
+Here's an example of how to use the library:
+
+<pre><code>var cse = new CoffeeSharpEngine();
+string js = cse.Compile("square = (x) -&gt; x * x");
+</code></pre>
+
+
+<h2>Example: Coffee.exe</h2>
 <p>
 Here's an example of how to use the commandline tool:
 
@@ -117,4 +111,16 @@ The source code of CoffeeSharp is available on <a href=http://github.com/tomlokh
 </footer>
 
 </div>
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-9310524-3']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
 
