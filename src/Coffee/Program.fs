@@ -1,4 +1,4 @@
-﻿[<assembly: System.Reflection.AssemblyVersion("0.1.0.0")>]
+﻿[<assembly: System.Reflection.AssemblyVersion("0.2.0.0")>]
 do ()
 
 let toNull (o : 'T option) =
@@ -27,7 +27,7 @@ open System.Reflection
 
 let showVersion () =
   printfn "CoffeeSharp  version %s" (Assembly.GetExecutingAssembly().GetName().Version.ToString())
-  printfn "CoffeeScript version %s" "1.0.1"
+  printfn "CoffeeScript version %s" "1.1.0"
 
 let showHelp () =
   printfn "Usage: Coffee.exe [options] path\\to\\script.coffee"
