@@ -11,13 +11,13 @@
 	//	    the converted js file should pop-up (remove the tag spaces):
 	//			< #@ template language="C#" hostspecific="True" # >
 	//			< #@ output extension=".coffee.js" # >
-	//			< #@ include file="MakeCoffee.tt" # >
+	//			< #@ include file="MakeCoffee.t4" # >
 	//		This way, every time the coffee file is saved, the generated js file will be updated automatically
 	//	2.  Without T4Toolbox, add a T4 template to your scripts folder and put the following T4 code in it 
 	//      (remove the tag spaces):
 	//			< #@ template language="C#" hostspecific="True" # >
 	//			< #@ output extension=".coffee.js" # >
-	//			< #@ include file="MakeCoffee.tt"  # >
+	//			< #@ include file="MakeCoffee.t4"  # >
 	//			< #= MakeCoffee("<your.coffee>")   # >
 	//		This will work but the resulting js code will not be generated each time the coffee file is changed, 
 	//		but each time perform "Run Custom Tool" from the T4 file's context menu.
