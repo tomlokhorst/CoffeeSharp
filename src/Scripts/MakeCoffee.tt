@@ -1,0 +1,47 @@
+﻿<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ assembly name="$(SolutionDir)/packages/CoffeeSharp.0.2/lib/CoffeeSharp.dll" #>
+<#@ import namespace="CoffeeSharp" #>
+<#= MakeCoffee() #>
+<#+
+  	public class CoffeeMachine
+	{
+		private static CoffeeScriptEngine Engine = new CoffeeSharp.CoffeeScriptEngine();
+		
+		public string Input { get; private set;}
+		
+		public CoffeeMachine(string inputFile)
+		{
+			Input = inputFile;
+		}
+		
+		public string Compile()
+		{
+			using(var reader = new StreamReader(Input))
+			{
+				string code = reader.ReadToEnd();
+				return Engine.Compile(code);
+			}
+		}
+	}
+	
+	string MakeCoffee(string name)
+	{
+		var fullPath = Host.ResolvePath(name);
+		var machine = new CoffeeMachine(fullPath);
+		return machine.Compile();
+	}
+	
+	string MakeCoffee()
+	{
+		var templatePath = this.Host.TemplateFile;		
+		var templateFolder = Path.GetDirectoryName(templatePath);
+		var coffeeScriptFile = string.Format("{0}.coffee", Path.GetFileNameWithoutExtension(this.Host.TemplateFile));		
+		var coffeeScriptPath = Path.Combine(templateFolder, coffeeScriptFile);
+		
+		if (!File.Exists(coffeeScriptPath))
+			return string.Empty;
+		
+		return MakeCoffee(coffeeScriptFile);
+	}
+#>

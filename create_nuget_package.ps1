@@ -2,10 +2,12 @@
 
 # copy files from a succesfull Visual Studio release build
 new-item -itemtype directory  NuGet\content
+new-item -itemtype directory  NuGet\content\Scripts
 new-item -itemtype directory  NuGet\lib
 new-item -itemtype directory  NuGet\tool
 
 Copy-Item src\web.config.transform  NuGet\content
+Copy-Item src\Scripts\MakeCoffee.tt  NuGet\content\Scripts
 
 Copy-Item src\CoffeeScriptHttpHandler\bin\Release\CoffeeScriptHttpHandler.dll  NuGet\lib
 Copy-Item src\CoffeeScriptHttpHandler\bin\Release\CoffeeSharp.dll              NuGet\lib
