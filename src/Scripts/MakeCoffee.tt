@@ -8,18 +8,17 @@
 	//  To automatically convert *.coffee files there are two possibilities
 	//	1.  Using T4Toolbox, set the "Custom Tool" of the coffee file to 'T4ScriptFileGenerator', this will
 	//	    cause a tt file to appear below the coffee file.  Put the following templating code in there and
-	//	    the converted js file should pop-up:
-	/*			<#@ template language="C#" hostspecific="True" #>
-				<#@ output extension=".coffee.js" #>
-				<#@ include file="MakeCoffee.tt" #>
-	*/				
+	//	    the converted js file should pop-up (remove the tag spaces):
+	//			< #@ template language="C#" hostspecific="True" # >
+	//			< #@ output extension=".coffee.js" # >
+	//			< #@ include file="MakeCoffee.tt" # >
 	//		This way, every time the coffee file is saved, the generated js file will be updated automatically
-	//	2.  Without T4Toolbox, add a T4 template to your scripts folder and put the following T4 code in it
-	/*			<#@ template language="C#" hostspecific="True" #>
-				<#@ output extension=".coffee.js" #>
-				<#@ include file="MakeCoffee.tt" #>
-				<#= MakeCoffee("<your.coffee>") #>
-	*/
+	//	2.  Without T4Toolbox, add a T4 template to your scripts folder and put the following T4 code in it 
+	//      (remove the tag spaces):
+	//			< #@ template language="C#" hostspecific="True" # >
+	//			< #@ output extension=".coffee.js" # >
+	//			< #@ include file="MakeCoffee.tt"  # >
+	//			< #= MakeCoffee("<your.coffee>")   # >
 	//		This will work but the resulting js code will not be generated each time the coffee file is changed, 
 	//		but each time perform "Run Custom Tool" from the T4 file's context menu.
 #>	
