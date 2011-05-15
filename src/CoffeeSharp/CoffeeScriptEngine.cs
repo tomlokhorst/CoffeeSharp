@@ -15,7 +15,7 @@ namespace CoffeeSharp
     public CoffeeScriptEngine()
     {
       this.scriptEngine = new ScriptEngine();
-      scriptEngine.Execute(Resources.CoffeeScriptSource);
+      scriptEngine.Execute(Resources.coffee_script);
       scriptEngine.Execute("coffeeScriptEval = CoffeeScript.eval;");
       scriptEngine.Execute("coffeeScriptNodes = CoffeeScript.nodes;");
       scriptEngine.Execute("coffeeScriptTokens = CoffeeScript.tokens;");
