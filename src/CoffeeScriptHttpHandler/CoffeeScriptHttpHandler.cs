@@ -3,19 +3,30 @@ using System.IO;
 using System.Web;
 using System.Web.Caching;
 using CoffeeSharp;
+using System.Threading;
 
 namespace CoffeeSharp
 {
   public class CoffeeScriptHttpHandler : IHttpHandler
   {
-    [ThreadStatic]
     private CoffeeScriptEngine coffeeScriptEngine;
     private ProcessorItem coffeeScriptProcInfo;
 
     public CoffeeScriptHttpHandler()
     {
-      this.coffeeScriptEngine = new CoffeeScriptEngine();
-      coffeeScriptProcInfo = new ProcessorItem(ProcessCoffee, "application/javascript");
+        lock(this)
+        {
+            // Ugly, but the stackoverflow exception in ASP.Net + Jurrassic reqs this
+            ThreadStart threadAction = () => 
+            {
+                coffeeScriptEngine = new CoffeeScriptEngine();
+             };
+            var thread = new Thread(threadAction, 1024 * 1024 * 4); 
+            thread.Start();
+            thread.Join();
+            coffeeScriptProcInfo = new ProcessorItem(ProcessCoffee, "application/javascript");
+
+        }
     }
 
     public void ProcessRequest(HttpContext context)
@@ -67,8 +78,12 @@ namespace CoffeeSharp
             var bare = getBool(context, "bare");
             var globals = getBool(context, "globals");
             var code = File.ReadAllText(coffeeScriptPath);
-            var js = this.coffeeScriptEngine.Compile(code, bare, globals);
-            return js;
+
+            lock(coffeeScriptEngine)
+            {
+                var js = coffeeScriptEngine.Compile(code, bare, globals);
+                return js;
+            }
         }
     }
 
