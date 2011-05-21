@@ -9,24 +9,11 @@ namespace CoffeeSharp
 {
   public class CoffeeScriptHttpHandler : IHttpHandler
   {
-    private CoffeeScriptEngine coffeeScriptEngine;
     private ProcessorItem coffeeScriptProcInfo;
 
     public CoffeeScriptHttpHandler()
     {
-        lock(this)
-        {
-            // Ugly, but the stackoverflow exception in ASP.Net + Jurrassic reqs this
-            ThreadStart threadAction = () => 
-            {
-                coffeeScriptEngine = new CoffeeScriptEngine();
-             };
-            var thread = new Thread(threadAction, 1024 * 1024 * 4); 
-            thread.Start();
-            thread.Join();
-            coffeeScriptProcInfo = new ProcessorItem(ProcessCoffee, "application/javascript");
-
-        }
+        coffeeScriptProcInfo = new ProcessorItem(ProcessCoffee, "application/javascript");
     }
 
     public void ProcessRequest(HttpContext context)
@@ -51,6 +38,21 @@ namespace CoffeeSharp
         context.Response.Write(cachedItem.Text);
     }
 
+    private CoffeeScriptEngine GetCoffeeScriptEngine()
+    {
+        CoffeeScriptEngine cse = null;
+
+        // Ugly, but the stackoverflow exception in ASP.Net + Jurrassic reqs this
+        ThreadStart threadAction = () =>
+        {
+            cse = new CoffeeScriptEngine();
+        };
+        var thread = new Thread(threadAction, 1024 * 1024 * 4);
+        thread.Start();
+        thread.Join();
+        return cse;
+    }
+
     private bool getBool(HttpContextBase context, string name)
     {
       var b = false;
@@ -69,9 +71,10 @@ namespace CoffeeSharp
     public string ProcessCoffee(string coffeeScriptPath, HttpContextBase context)
     {
         string jsPath = Path.ChangeExtension(coffeeScriptPath, "js");
+        string compiledJS = null;
         if (File.Exists(jsPath) && File.GetLastWriteTime(jsPath) > File.GetLastWriteTime(coffeeScriptPath))
         {
-            return File.ReadAllText(jsPath);
+            compiledJS = File.ReadAllText(jsPath);
         }
         else
         {
@@ -79,12 +82,15 @@ namespace CoffeeSharp
             var globals = getBool(context, "globals");
             var code = File.ReadAllText(coffeeScriptPath);
 
+            CoffeeScriptEngine coffeeScriptEngine = (CoffeeScriptEngine)context.Cache["CoffeeScriptEngine"] ?? GetCoffeeScriptEngine();
+            context.Cache["CoffeeScriptEngine"] = coffeeScriptEngine;
             lock(coffeeScriptEngine)
             {
-                var js = coffeeScriptEngine.Compile(code, bare, globals);
-                return js;
+                compiledJS = coffeeScriptEngine.Compile(code, bare, globals);
             }
         }
+
+        return (compiledJS == string.Empty) ? null : compiledJS;
     }
 
     public class ProcessorItem
