@@ -1,6 +1,6 @@
 ﻿<#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
-<#@ assembly name="$(SolutionDir)/packages/CoffeeSharp.0.2/lib/CoffeeSharp.dll" #>
+<#@ assembly name="$(SolutionDir)/packages/CoffeeSharp.$packageversion$/lib/CoffeeSharp.dll" #>
 <#@ import namespace="CoffeeSharp" #>
 <#= MakeCoffee() #>
 
