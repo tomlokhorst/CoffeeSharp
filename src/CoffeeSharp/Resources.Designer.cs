@@ -62,7 +62,7 @@ namespace CoffeeSharp {
         
         /// <summary>
         ///   Looks up a localized string similar to /**
-        /// * CoffeeScript Compiler v1.1.0
+        /// * CoffeeScript Compiler v1.1.1
         /// * http://coffeescript.org
         /// *
         /// * Copyright 2011, Jeremy Ashkenas
@@ -70,9 +70,9 @@ namespace CoffeeSharp {
         /// */
         ///this.CoffeeScript=function(){function require(a){return require[a]}require[&quot;./helpers&quot;]=new function(){var a=this;(function(){var b,c;a.starts=function(a,b,c){return b===a.substr(c,b.length)},a.ends=function(a,b,c){var d;d=b.length;return b===a.substr(a.length-d-(c||0),d)},a.compact=function(a){var b,c,d,e;e=[];for(c=0,d=a.length;c&lt;d;c++)b=a[c],b&amp;&amp;e.push(b);return [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CoffeeScriptSource {
+        internal static string coffee_script {
             get {
-                return ResourceManager.GetString("CoffeeScriptSource", resourceCulture);
+                return ResourceManager.GetString("coffee_script", resourceCulture);
             }
         }
     }
