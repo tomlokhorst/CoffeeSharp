@@ -56,8 +56,8 @@ let compileScript dir fn bare print outputDir log =
   let c fn code = compile code bare false (Some fn)
   
   let read fn = 
-    let file = File.Open(fn, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-    let reader = new StreamReader(file)
+    use file = File.Open(fn, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+    use reader = new StreamReader(file)
     reader.ReadToEnd()
 
   let filename dir fn =
