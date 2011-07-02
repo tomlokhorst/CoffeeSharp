@@ -54,18 +54,25 @@ let compile code bare globals filename =
 
 let compileScript dir fn bare print outputDir log =
   let c fn code = compile code bare false (Some fn)
+  
+  let read fn = 
+    use file = File.Open(fn, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+    use reader = new StreamReader(file)
+    reader.ReadToEnd()
+
   let filename dir fn =
     let fn'  = Path.Combine(Option.fold (fun _ s -> s) dir outputDir, fn)
     let dir' = Path.GetDirectoryName fn'
     let file = Path.GetFileNameWithoutExtension fn'
     Directory.CreateDirectory dir' |> ignore
     Path.Combine(dir', file + ".js")
+ 
   let output dir fn s =
     if print
     then printfn "%s" s
     else File.WriteAllText(filename dir fn, s)
   Path.Combine(dir, fn)
-  |> File.ReadAllText
+  |> read
   |> c fn
   |> Option.iter (output dir fn)
   if log
