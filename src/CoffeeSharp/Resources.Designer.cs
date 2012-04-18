@@ -62,7 +62,7 @@ namespace CoffeeSharp {
         
         /// <summary>
         ///   Looks up a localized string similar to /**
-        /// * CoffeeScript Compiler v1.2.0
+        /// * CoffeeScript Compiler v1.3.1
         /// * http://coffeescript.org
         /// *
         /// * Copyright 2011, Jeremy Ashkenas
