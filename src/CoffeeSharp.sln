@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeSharp", "CoffeeSharp\CoffeeSharp.csproj", "{B269FEBD-F9CE-4C90-B26C-C2C42F3BE375}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Coffee", "Coffee\Coffee.fsproj", "{D294906B-DE5D-43CB-B88F-8799F2096730}"
